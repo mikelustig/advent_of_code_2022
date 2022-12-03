@@ -12,8 +12,8 @@ def item_priority(item)
 end
 
 def group_priority(group)
-  common_item = group[0].intersection(group[1]).intersection(group[2])
-  item_priority(common_item.first)
+  common_item = group[0].intersection(group[1]).intersection(group[2]).first
+  item_priority(common_item)
 end
 
 puts groups.reduce(0) { |priority_sum,group| priority_sum + group_priority(group) }
