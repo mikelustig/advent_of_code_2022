@@ -10,14 +10,14 @@ class MCP
     @screen = {}
   end
 
-  def tick # tock, on the clock
-    x_val = (@clock % 40)
+  def tick(adder = nil) # tock, on the clock
     y_val = @clock / 40
 
     pixel = '.'
-    pixel = '#' if [-1,0,1].include?(x_val - @x)
+    pixel = '#' if [-1,0,1].include?((@clock % 40) - 1 - @x)
 
-    @screen[[x_val, y_val]] = pixel
+    @screen[[(@clock % 40) - 1, y_val]] = pixel
+    @x += adder if adder
     @clock += 1
   end
 
@@ -26,8 +26,7 @@ class MCP
       case command[0]
       when 'addx'
         tick
-        @x += command[1].to_i
-        tick
+        tick(command[1].to_i)
       when 'noop'
         tick
       end
